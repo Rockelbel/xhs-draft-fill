@@ -123,24 +123,38 @@
     }
     const parsed = parsePost(postText);
 
-    // 2. pic*.png 按序
+    // 2. 所有图片：常见格式（png/jpg/jpeg/webp/gif），按自然顺序排序
+    const IMG_RE = /\.(png|jpe?g|webp|gif)$/i;
     const pics = [];
     for await (const [name, h] of dirHandle.entries()) {
-      if (h.kind === 'file' && /^pic\d+\.png$/i.test(name)) {
-        const idx = parseInt(name.match(/(\d+)/)[1], 10);
-        pics.push({ idx, name, handle: h });
-      }
+      if (h.kind !== 'file' || name.startsWith('.')) continue;
+      if (!IMG_RE.test(name)) continue;
+      pics.push({ name, handle: h });
     }
-    pics.sort((a, b) => a.idx - b.idx);
-    if (pics.length === 0) throw new Error('没有 pic*.png');
+    // 自然排序：若文件名含数字就按数字排，否则字母序
+    pics.sort((a, b) => {
+      const na = a.name.match(/\d+/);
+      const nb = b.name.match(/\d+/);
+      if (na && nb) {
+        const diff = parseInt(na[0], 10) - parseInt(nb[0], 10);
+        if (diff !== 0) return diff;
+      }
+      return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' });
+    });
+    if (pics.length === 0) throw new Error('文件夹中没有图片（支持 png/jpg/jpeg/webp/gif）');
 
+    const EXT_MIME = {
+      png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg',
+      webp: 'image/webp', gif: 'image/gif'
+    };
     const imageBlobs = [];
     for (const p of pics) {
       const file = await p.handle.getFile();
       const ab = await file.arrayBuffer();
+      const ext = p.name.split('.').pop().toLowerCase();
       imageBlobs.push({
         name: p.name,
-        type: file.type || 'image/png',
+        type: file.type || EXT_MIME[ext] || 'application/octet-stream',
         base64: arrayBufferToBase64(ab)
       });
     }

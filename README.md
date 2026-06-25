@@ -35,15 +35,21 @@
 redbook/
 ├── 260614_judgment_luxury/
 │   ├── post.txt            # 文案
-│   ├── pic1.png            # 第 1 张图
-│   ├── pic2.png
+│   ├── pic1.png            # 任意命名、任意常见格式
+│   ├── pic2.jpg            # png / jpg / jpeg / webp / gif 都行
 │   ...
-│   └── pic7.png            # 第 N 张图（4-9 张均可）
+│   └── pic7.webp
 ├── 260615_other_topic/
 │   ├── post.txt
-│   └── pic1.png ~ picN.png
+│   ├── 1-cover.png
+│   ├── 2-detail.jpg
+│   └── ...
 └── ...
 ```
+
+**图片说明**：
+- 自动识别文件夹下所有图片（扩展名为 png/jpg/jpeg/webp/gif），无需固定命名
+- 按**自然顺序**排序：先按文件名中的数字，再按字母序（例如 `1.png` → `2.png` → `10.png` → `cover.png`）
 
 ### `post.txt` 格式
 
@@ -131,13 +137,12 @@ __rbdFill({
 ## 已知限制
 
 - **仅支持 macOS / Chrome 137+**（需要 File System Access API）
-- **图片必须是 PNG**（其他格式可改 `popup.js` 里的 `pic*.png` 正则）
 - **XHS UI 改版可能导致选择器失效**：故障时看 console 的 `[rbd-fill]` 日志，调整 `injected/fill.js` 里的选择器
 - **不支持视频、长文**：只针对图文笔记
 
 ## 路线图
 
-- [ ] 支持自定义文件名规则（非 `pic\d+.png`）
+- [x] 支持任意图片文件名 / 多种格式
 - [ ] 支持视频笔记
 - [ ] 支持话题（#tag）自动选择
 - [ ] 支持地点 / 商品标记
