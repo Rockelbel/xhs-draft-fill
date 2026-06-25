@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>小红书草稿填写</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <h1>小红书草稿填写</h1>
+    <div class="root-row">
+      <span class="root-label" id="rootLabel">未选择目录</span>
+      <button id="pickRootBtn" class="btn-sm">选目录</button>
+    </div>
+  </header>
+
+  <section class="actions">
+    <button id="grantBtn" class="btn-block" style="display:none;background:#f5a623;">授权访问目录</button>
+    <button id="openPublishBtn" class="btn-block">打开小红书发布页</button>
+  </section>
+
+  <section class="folders">
+    <div class="folders-header">
+      <span>文件夹列表</span>
+      <button id="refreshBtn" class="btn-sm" title="重新读取">↻</button>
+    </div>
+    <ul id="folderList"></ul>
+    <p id="emptyHint" class="hint">点击「选目录」选择 redbook 根目录</p>
+  </section>
+
+  <footer>
+    <div id="status" class="status"></div>
+  </footer>
+
+  <script src="../lib/db.js"></script>
+  <script src="../lib/parser.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

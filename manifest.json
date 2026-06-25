@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "小红书草稿填写",
+  "version": "0.1.0",
+  "description": "从本地 redbook 目录一键填入小红书发布页（标题、正文、图片），手动点保存草稿。",
+  "author": "edy",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://creator.xiaohongshu.com/*",
+    "https://*.xiaohongshu.com/*"
+  ],
+  "icons": {
+    "16": "icons/icon.png",
+    "48": "icons/icon.png",
+    "128": "icons/icon.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "小红书草稿填写",
+    "default_icon": {
+      "16": "icons/icon.png",
+      "48": "icons/icon.png",
+      "128": "icons/icon.png"
+    }
+  }
+}
